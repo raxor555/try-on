@@ -14,14 +14,14 @@ export const ApiDocs = () => {
     };
 
     const codeExamples = {
-        curl: `curl -X POST https://tryout-ai.vercel.app/api/v1/try-on \\
+        curl: `curl -X POST https://rufhrppnoksntttbenuk.supabase.co/functions/v1/try-on \\
   -H "X-API-Key: YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
     "person_image": "https://example.com/person.jpg",
     "garment_image": "https://example.com/shirt.jpg"
   }'`,
-        javascript: `const response = await fetch('https://tryout-ai.vercel.app/api/v1/try-on', {
+        javascript: `const response = await fetch('https://rufhrppnoksntttbenuk.supabase.co/functions/v1/try-on', {
   method: 'POST',
   headers: {
     'X-API-Key': 'YOUR_API_KEY',
@@ -37,7 +37,7 @@ const data = await response.json();
 console.log(data.image_url);`,
         python: `import requests
 
-url = "https://tryout-ai.vercel.app/api/v1/try-on"
+url = "https://rufhrppnoksntttbenuk.supabase.co/functions/v1/try-on"
 headers = {
     "X-API-Key": "YOUR_API_KEY",
     "Content-Type": "application/json"
@@ -68,7 +68,7 @@ print(response.json())`
                         <h3 className="text-xl font-bold">Base URL</h3>
                     </div>
                     <code className="bg-slate-900 border border-slate-700 px-4 py-2 rounded-md block font-mono text-sm">
-                        https://tryout-ai.vercel.app/api/v1
+                        https://rufhrppnoksntttbenuk.supabase.co/functions/v1
                     </code>
                 </Card>
                 <Card>
