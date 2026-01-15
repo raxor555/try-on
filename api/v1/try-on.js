@@ -20,27 +20,38 @@ export default async function handler(req, res) {
 
     try {
         // 4. Forward the request to Supabase with injected apikey
-        const response = await axios.post(functionUrl, req.body, {
+        // We remove Authorization header as it can conflict with apikey routing in Supabase Gateway
+        const response = await axios({
+            method: 'post',
+            url: functionUrl,
+            data: req.body || {},
             headers: {
                 'apikey': SUPABASE_ANON_KEY,
-                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
                 'X-API-Key': apiKey,
                 'Content-Type': 'application/json'
-            }
+            },
+            timeout: 15000
         });
 
         // 5. Return the result to the customer
         return res.status(200).json(response.data);
 
     } catch (error) {
-        console.error('Proxy Error:', error.response?.data || error.message);
-
+        // 6. Detailed error reporting for easier debugging
+        const responseData = error.response?.data;
         const statusCode = error.response?.status || 500;
-        const errorMessage = error.response?.data?.error || 'Internal Server Error';
+
+        console.error('Proxy Error Details:', {
+            status: statusCode,
+            data: responseData,
+            message: error.message
+        });
 
         return res.status(statusCode).json({
-            error: errorMessage,
-            details: error.response?.data
+            success: false,
+            error: responseData?.message || error.message || 'Internal Server Error',
+            code: responseData?.code || 'PROXY_ERROR',
+            details: responseData
         });
     }
 }
