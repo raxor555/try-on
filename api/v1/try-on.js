@@ -20,13 +20,14 @@ export default async function handler(req, res) {
 
     try {
         // 4. Forward the request to Supabase with injected apikey
-        // We remove Authorization header as it can conflict with apikey routing in Supabase Gateway
+        // Including both 'apikey' and 'Authorization' for maximum compatibility with Supabase Gateway
         const response = await axios({
             method: 'post',
             url: functionUrl,
             data: req.body || {},
             headers: {
                 'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
                 'X-API-Key': apiKey,
                 'Content-Type': 'application/json'
             },
